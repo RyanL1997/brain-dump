@@ -21,18 +21,22 @@
     {
       "calculate": "datum._source.HistoryData.newState.stateValue",
       "as": "newState"
+    },
+    {
+      "calculate": "datum.newState === 'ALARM' ? 'red' : 'green'",
+      "as": "stateColor"
     }
   ],
-  "mark": "circle",
+  "mark": "bar",
   "encoding": {
-    "x": {"field": "time", "type": "temporal", "title": "Timestamp"},
-    "y": {"field": "_source.AlarmName", "type": "nominal", "title": "Alarm"},
-    "color": {"field": "newState", "type": "nominal", "title": "New State"},
+    "x": { "field": "time", "type": "temporal", "title": "Timestamp" },
+    "y": { "field": "_source.AlarmName", "type": "nominal", "title": "Alarm" },
+    "color": { "field": "stateColor", "type": "nominal", "scale": null, "legend": null },
     "tooltip": [
-      {"field": "_source.AlarmName", "title": "Alarm"},
-      {"field": "oldState", "title": "Old State"},
-      {"field": "newState", "title": "New State"},
-      {"field": "time", "title": "Timestamp"}
+      { "field": "_source.AlarmName", "title": "Alarm" },
+      { "field": "oldState", "title": "Old State" },
+      { "field": "newState", "title": "New State" },
+      { "field": "time", "title": "Timestamp" }
     ]
   }
 }
