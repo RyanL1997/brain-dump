@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": {
+      "context": true,
+      "index": "cw-histories"
+    },
+    "format": {
+      "property": "hits.hits"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toDate(datum._source.Timestamp)",
+      "as": "time"
+    },
+    {
+      "calculate": "datum._source.HistoryData.oldState.stateValue",
+      "as": "oldState"
+    },
+    {
+      "calculate": "datum._source.HistoryData.newState.stateValue",
+      "as": "newState"
+    }
+  ],
+  "mark": "circle",
+  "encoding": {
+    "x": {"field": "time", "type": "temporal", "title": "Timestamp"},
+    "y": {"field": "_source.AlarmName", "type": "nominal", "title": "Alarm"},
+    "color": {"field": "newState", "type": "nominal", "title": "New State"},
+    "tooltip": [
+      {"field": "_source.AlarmName", "title": "Alarm"},
+      {"field": "oldState", "title": "Old State"},
+      {"field": "newState", "title": "New State"},
+      {"field": "time", "title": "Timestamp"}
+    ]
+  }
+}
